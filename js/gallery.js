@@ -65,7 +65,7 @@
   ];
   const container = document.querySelector('.gallery');
 
- function createGalleryItem({ preview, original, description }) {
+  function createGalleryItem({ preview, original, description }) {
     return `
       <li class="gallery-item">
         <a class="gallery-link" href="${original}">
@@ -79,14 +79,13 @@
       </li>
     `;
   }
-
+  
   function renderGallery() {
     const galleryHTML = images.map(createGalleryItem).join('');
-    galleryContainer.innerHTML = galleryHTML;
+    container.innerHTML = galleryHTML;
   }
   
   renderGallery();
-  
   
   function openModal(imageSrc) {
     const instance = basicLightbox.create(`
@@ -96,8 +95,7 @@
     instance.show();
   }
   
-  
-  galleryContainer.addEventListener('click', (event) => {
+  container.addEventListener('click', (event) => {
     event.preventDefault();
   
     if (event.target.nodeName !== 'IMG') {
@@ -108,9 +106,9 @@
     openModal(imageSrc);
   });
   
-  
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       basicLightbox.close();
     }
   });
+  
