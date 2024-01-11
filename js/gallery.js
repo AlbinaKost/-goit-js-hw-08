@@ -87,7 +87,7 @@
   
   renderGallery();
   
-  // Функція для відкриття модального вікна
+  
   function openModal(imageSrc) {
     const instance = basicLightbox.create(`
       <img width="800" height="600" src="${imageSrc}">
@@ -96,7 +96,7 @@
     instance.show();
   }
   
-  // Обробник події кліку на елемент галереї
+  
   galleryContainer.addEventListener('click', (event) => {
     event.preventDefault();
   
@@ -108,7 +108,7 @@
     openModal(imageSrc);
   });
   
-  // Обробник події закриття модального вікна при натисканні клавіші Escape
+  
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       basicLightbox.close();
