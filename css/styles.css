@@ -1,9 +1,9 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f0f0f0;
-  }
+  } */
   
 ul {
  display: flex;
@@ -17,5 +17,15 @@ ul {
 .gallery-item {
  width: 360px;
  height: 200px;
- margin-bottom: 24px;
+ padding-top: 24px;
+ padding-bottom: 24px;
+
 }
+
+.gallery-image {
+  max-width: 100%;
+  height: auto;
+  /* cursor: pointer;
+  transition: transform 0.3s ease-in-out; */
+}
+
