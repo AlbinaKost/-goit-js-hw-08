@@ -106,9 +106,14 @@
     openModal(imageSrc);
   });
   
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      basicLightbox.close();
-    }
-  });
-  
+  // document.addEventListener('keydown', (event) => {
+  //   if (event.key === 'Escape') {
+  //     basicLightbox.close();
+  //   }
+  // });
+  function closeModal(e) {
+    console.log(e.code);
+    if (e.code === 'Escape') instance.close();
+  }
+
+  instance.show();
