@@ -63,52 +63,43 @@
       description: "Lighthouse Coast Sea",
     },
   ];
-  const container = document.querySelector('.gallery');
-
-  function createGalleryItem({ preview, original, description }) {
-    return `
-      <li class="gallery-item">
-        <a class="gallery-link" href="${original}">
-          <img
-            class="gallery-image"
-            src="${preview}"
-            data-source="${original}"
-            alt="${description}"
-          />
-        </a>
-      </li>
-    `;
-  }
   
-  function renderGallery() {
-    const galleryHTML = images.map(createGalleryItem).join('');
-    container.innerHTML = galleryHTML;
-  }
+  const galleryContainer = document.querySelector('.gallery');
+  const galleryMarkup = images.map(({ preview, original, description }) => `
+    <li class="gallery-item">
+      <a class="gallery-link" href="${original}">
+        <img
+          class="gallery-image"
+          src="${preview}"
+          data-source="${original}"
+          alt="${description}"
+        />
+      </a>
+    </li>
+  `).join('');
   
-  renderGallery();
+  galleryContainer.innerHTML = galleryMarkup;
   
-  function openModal(imageSrc) {
-    const instance = basicLightbox.create(`
-      <img width="800" height="600" src="${imageSrc}">
-    `);
+  galleryContainer.addEventListener('click', onGalleryClick);
   
-    instance.show();
-  }
-  
-  container.addEventListener('click', (event) => {
-    event.preventDefault();
-  
-    if (event.target.nodeName !== 'IMG') {
-      return;
+  function onGalleryClick(event) {
+      event.preventDefault();
+      if (event.target.nodeName !== 'IMG') {
+        return;
+      }
+    
+      const imageSrc = event.target.dataset.source;
+    
+      const instance = basicLightbox.create(`
+        <img src="${imageSrc}" width="800" height="600">
+      `);
+    
+      instance.show();
+    
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          instance.close();
+        }
+      }, { once: true }); 
     }
-  
-    const imageSrc = event.target.dataset.source;
-    openModal(imageSrc);
-  });
-  
-  function closeModal(e) {
-    console.log(e.code);
-    if (e.code === 'Escape') instance.close();
-  }
-
-  instance.show();
