@@ -64,42 +64,42 @@
     },
   ];
   
-  const galleryContainer = document.querySelector('.gallery');
-  const galleryMarkup = images.map(({ preview, original, description }) => `
-    <li class="gallery-item">
-      <a class="gallery-link" href="${original}">
-        <img
-          class="gallery-image"
-          src="${preview}"
-          data-source="${original}"
-          alt="${description}"
-        />
-      </a>
-    </li>
-  `).join('');
-  
-  galleryContainer.innerHTML = galleryMarkup;
-  
-  galleryContainer.addEventListener('click', onGalleryClick);
-  
-  function onGalleryClick(event) {
-      event.preventDefault();
-      if (event.target.nodeName !== 'IMG') {
-        return;
-      }
-    
-      const imageSrc = event.target.dataset.source;
-    
-      const instance = basicLightbox.create(`
-        <img src="${imageSrc}" width="800" height="600">
-      `);
-    
-      instance.show();
-    
-      
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          instance.close();
-        }
-      }, { once: true }); 
+  const arrayOfImages = images
+  .map(
+    (item) => `<li class="gallery-item">
+    <a
+      class="gallery-link"
+      href="${item.original}">
+      <img
+        class="gallery-image"
+        src="${item.preview}"
+        data-source="${item.original}"
+        alt="${item.description}"
+      />
+    </a>
+  </li>`,
+  )
+  .join('\n\n');
+const gallery = document.querySelector('.gallery');
+gallery.insertAdjacentHTML('afterbegin', arrayOfImages);
+
+gallery.onclick = (e) => {
+  if (e.target.nodeName !== 'IMG') {
+    return;
+  }
+  e.preventDefault();
+  const img = e.target.dataset.source;
+  console.log(img);
+  const instance = basicLightbox.create(
+    `<img style="width: auto; height: auto" src="${img}">`,
+  );
+  instance.show();
+
+  const handleKeydown = (e) => {
+    if (e.key === 'Escape' && instance.visible()) {
+      instance.close();
+      document.removeEventListener('keydown', handleKeydown);
     }
+  };
+  document.addEventListener('keydown', handleKeydown);
+};
